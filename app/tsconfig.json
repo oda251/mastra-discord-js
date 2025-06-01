@@ -31,6 +31,6 @@
       "@assets/*": ["assets/*"],
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "init.ts"],
   "exclude": ["node_modules", "dist", ".mastra"]
 }
