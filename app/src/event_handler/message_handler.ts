@@ -8,6 +8,12 @@ export async function message_handler(
   if (msg.content.trim() === "" || msg.author.bot) {
     return;
   }
+  if (
+    msg.guildId === process.env.DISCORD_GUILD_ID &&
+    msg.channelId !== process.env.DISCORD_CHANNEL_ID
+  ) {
+    return;
+  }
   msg.channel.sendTyping();
   const reply = await ttsAgent.generate(
     [
