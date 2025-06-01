@@ -31,5 +31,5 @@ client.login(process.env.DISCORD_TOKEN);
 
 serve({
   fetch: keepAlive.fetch,
-  port: 8080,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
 });
