@@ -1,18 +1,14 @@
-// general
-import "dotenv/config";
-
 // Discord
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { message_handler } from "@/event_handler/message_handler";
 import { reaction_handler } from "@/event_handler/reaction_handler";
 
 // Mastra
-import { Mastra } from "@mastra/core";
 import ttsAgent from "@/agent/tts-agent";
 
-// const mastra = new Mastra({
-//   agents: { ttsAgent },
-// });
+// Hono
+import keepAlive from "@/keep_alive";
+import { serve } from "@hono/node-server";
 
 const client = new Client({
   intents: Object.values(GatewayIntentBits).reduce((a, b) => a | b),
@@ -30,4 +26,10 @@ client.on(Events.MessageReactionAdd, reaction_handler);
 
 client.on(Events.MessageCreate, message_handler);
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+console.log("Bot is starting...");
+client.login(process.env.DISCORD_TOKEN);
+
+serve({
+  fetch: keepAlive.fetch,
+  port: 8080,
+});

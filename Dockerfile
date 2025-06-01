@@ -1,11 +1,12 @@
-FROM node:lts-alpine3.22-slim
+FROM node:23-alpine
 
-RUN npm install -g npm@latest
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY ./app .
 
-COPY . .
+RUN npm install && npm install -g tsx ts-node typescript
 
-RUN npm install --omit=dev
 
-CMD ["npm", "start"]
+EXPOSE 8080
+
+CMD ["tsx", "index.ts"]
